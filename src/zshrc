@@ -6,6 +6,10 @@ _Zshrc_preconditions() {
   then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
   fi
+  # colors
+  autoload colors
+  color_prompt=yes
+  colors
 }
 
 _Zshrc_exports() {
@@ -72,10 +76,6 @@ _Zshrc_aliases() {
 }
 
 _Zshrc_postconditions() {
-  # colors
-  autoload colors
-  color_prompt=yes
-  colors
   # jenv
   if which jenv > /dev/null
   then
