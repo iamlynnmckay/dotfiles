@@ -37,3 +37,48 @@ alias nvim='_vi'
 #
 # END vi
 #
+
+#
+# BEGIN mkwip
+#
+
+_mkwip() {
+  local -r _root="${HOME}/.config/mkwip"
+  if [[ ! -e "${_root}" ]]
+  then
+    echo -n "Enter absolute path of source directory: " && \
+    read -r _MKWIP_SRC && \
+    echo -n "Enter absolute path of destination directory: " && \
+    read -r _MKWIP_DEST && \
+    if [[ -z "${EDITOR}" ]]
+    then
+      echo -n "Enter editor name: " && \
+      read -r _MKWIP_EDITOR
+    else
+      _MKWIP_EDITOR="${EDITOR}"
+    fi
+    mkdir -p "${_root}"
+cat >> "${_root}/mkwip.env" << _EOF
+_MKWIP_SRC='${_MKWIP_SRC}'
+_MKWIP_DEST='${_MKWIP_DEST}'
+_MKWIP_EDITOR='${_MKWIP_EDITOR}'
+_EOF
+  fi
+  source "${_root}/mkwip.env"
+  local -r _directory="${_MKWIP_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
+  mkdir -p "${_directory}"
+  local -r _file="${_directory}/$(date +%Y-%m-%d).md"
+  if [[ ! -e "${_file}" ]]
+  then 
+    echo "# $(date)" > "${_file}"
+  fi
+  local -r _link="${_MKWIP_DEST}"
+  rm -f "${_link}"
+  ln -sf "${_directory}" "${_link}"
+}
+
+alias mkwip='_mkwip'
+
+#
+# END mkwip
+#
