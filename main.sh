@@ -3,8 +3,8 @@
 set -x -o pipefail
 
 _Dotfiles_install() {
-    local -r _ROOT="${1:?}"
-    cp -r "${_ROOT}" "${HOME}/.dotfiles" ; \
+    local -r _root="${1:?}"
+    cp -r "${_root}" "${HOME}/.dotfiles" ; \
 	mkdir -p "${HOME}/.config/nvim" ; \
 	ln -sf "${HOME}/.dotfiles/public" "${HOME}/.public" ; \
 	ln -sf "${HOME}/.dotfiles/gitignore" "${HOME}/.gitignore" ; \
@@ -38,8 +38,11 @@ _Dotfiles_clean() {
 ___main___() {
     case "${1}" in
         "--install")
-            _Dotfiles_install "${2:-${PWD}/src}"
+            _Dotfiles_install "${PWD}/src"
         ;;
+		"--homebrew")
+			_Dotfiles_install "/usr/local/opt/dotfiles"
+		;;
         "--clean")
             _Dotfiles_clean 
         ;;

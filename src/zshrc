@@ -92,9 +92,9 @@ _Zshrc_postconditions() {
 
 _Zshrc_main() {
   _Zshrc_preconditions
-  _Zshrc_exports
-  _Zshrc_globals
   _Zshrc_setopts
+  _Zshrc_globals
+  _Zshrc_exports
   _Zshrc_aliases
   _Zshrc_postconditions
   source ~/.public
