@@ -82,3 +82,45 @@ alias mkwip='_mkwip'
 #
 # END mkwip
 #
+
+#
+# BEGIN homebrew
+#
+
+_Homebrew_install() {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
+_Homebrew_uninstall() {
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew list | xargs brew uninstall --force
+  brew list --cask | xargs brew uninstall --force
+  sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+  sudo rm -rf /usr/local
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew list | xargs brew uninstall --force
+  brew list --cask | xargs brew uninstall --force
+  sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
+  sudo rm -rf /usr/local
+}
+
+_Homebrew_main() {
+  case "${1}" in
+    "--install")
+      _Homebrew_install
+    ;;
+    "--uninstall")
+      _Homebrew_uninstall
+    ;;
+  esac
+}
+
+_homebrew() {
+  _Homebrew_main $@
+}
+
+alias homebrew='_homebrew'
+
+#
+# END homebrew
+#
