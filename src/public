@@ -46,9 +46,15 @@ _mkwip() {
   local -r _root="${HOME}/.config/mkwip"
   if [[ ! -e "${_root}" ]]
   then
-    echo -n "Enter absolute path of source directory: " && \
-    read -r _MKWIP_SRC && \
-    echo -n "Enter absolute path of destination directory: " && \
+    echo -n "Enter absolute path of root source: " && \
+    read -r _MKWIP_ROOT_SRC && \
+    echo -n "Enter absolute path of notes source: " && \
+    read -r _MKWIP_NOTES_SRC && \
+    echo -n "Enter absolute path of todo source: " && \
+    read -r _MKWIP_TODO_SRC && \
+    echo -n "Enter absolute path of wip source: " && \
+    read -r _MKWIP_WIP_SRC && \
+    echo -n "Enter absolute path of destination: " && \
     read -r _MKWIP_DEST && \
     if [[ -z "${EDITOR}" ]]
     then
@@ -59,22 +65,29 @@ _mkwip() {
     fi
     mkdir -p "${_root}"
 cat >> "${_root}/mkwip.env" << _EOF
-_MKWIP_SRC='${_MKWIP_SRC}'
+_MKWIP_ROOT_SRC='${_MKWIP_ROOT_SRC}'
+_MKWIP_NOTES_SRC='${_MKWIP_NOTES_SRC}'
+_MKWIP_TODO_SRC='${_MKWIP_TODO_SRC}'
+_MKWIP_WIP_SRC='${_MKWIP_WIP_SRC}'
 _MKWIP_DEST='${_MKWIP_DEST}'
 _MKWIP_EDITOR='${_MKWIP_EDITOR}'
 _EOF
   fi
   source "${_root}/mkwip.env"
-  local -r _directory="${_MKWIP_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
+  local -r _directory="${_MKWIP_NOTES_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
   mkdir -p "${_directory}"
   local -r _file="${_directory}/$(date +%Y-%m-%d).md"
   if [[ ! -e "${_file}" ]]
   then 
     echo "# $(date)" > "${_file}"
   fi
+  rm -rf "${_MKWIP_DEST}"
+  mkdir -p "${_MKWIP_DEST}"
   local -r _link="${_MKWIP_DEST}"
-  rm -f "${_link}"
-  ln -sf "${_directory}" "${_link}"
+  ln -sf "${_directory}" "${_MKWIP_DEST}/_$(date +%Y-%m-%d)"
+  ln -sf "${_MKWIP_ROOT_SRC}" "${_MKWIP_DEST}/_root"
+  ln -sf "${_MKWIP_ROOT_TODO_SRC}" "${_MKWIP_DEST}/_todo.md"
+  ln -sf "${_MKWIP_ROOT_WIP_SRC}" "${_MKWIP_DEST}/_wip"
 }
 
 alias mkwip='_mkwip'
