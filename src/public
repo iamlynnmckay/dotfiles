@@ -86,8 +86,8 @@ _EOF
   local -r _link="${_MKWIP_DEST}"
   ln -sf "${_directory}" "${_MKWIP_DEST}/_$(date +%Y-%m-%d)"
   ln -sf "${_MKWIP_ROOT_SRC}" "${_MKWIP_DEST}/_root"
-  ln -sf "${_MKWIP_ROOT_TODO_SRC}" "${_MKWIP_DEST}/_todo.md"
-  ln -sf "${_MKWIP_ROOT_WIP_SRC}" "${_MKWIP_DEST}/_wip"
+  ln -sf "${_MKWIP_TODO_SRC}" "${_MKWIP_DEST}/_todo.md"
+  ln -sf "${_MKWIP_WIP_SRC}" "${_MKWIP_DEST}/_wip"
 }
 
 alias mkwip='_mkwip'
