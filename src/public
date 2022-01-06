@@ -84,10 +84,10 @@ _EOF
   rm -rf "${_MKWIP_DEST}"
   mkdir -p "${_MKWIP_DEST}"
   local -r _link="${_MKWIP_DEST}"
-  ln -sf "${_directory}" "${_MKWIP_DEST}/_notes"
-  ln -sf "${_MKWIP_PROJECTS_SRC}" "${_MKWIP_DEST}/_projects"
-  ln -sf "${_MKWIP_TODO_SRC}" "${_MKWIP_DEST}/_todo.md"
-  ln -sf "${_MKWIP_WIP_SRC}" "${_MKWIP_DEST}/_wip"
+  ln -sf "${_directory}" "${_MKWIP_DEST}/$(date +%Y-%m-%d)"
+  ln -sf "${_MKWIP_PROJECTS_SRC}" "${_MKWIP_DEST}/root"
+  ln -sf "${_MKWIP_TODO_SRC}" "${_MKWIP_DEST}/TODO.md"
+  ln -sf "${_MKWIP_WIP_SRC}" "${_MKWIP_DEST}/wip"
 }
 
 alias mkwip='_mkwip'
