@@ -14,21 +14,21 @@ set autoread " read file from disk on change outside of vim
 set backspace=2 " allow backspacing over everything in insert mode
 set cindent " c code indenting
 set diffopt=filler,iwhite " keep files synced and ignore whitespace
-set expandtab " Get rid of tabs altogether and replace with spaces
+set expandtab " get rid of tabs altogether and replace with spaces
 set foldcolumn=2 " set a column incase we need it
 set foldlevel=0 " show contents of all folds
 set foldmethod=indent " use indent unless overridden
-set guioptions-=T " Remove toolbar
-set guioptions-=m " Remove menu from the gui
+set guioptions-=T " remove toolbar
+set guioptions-=m " remove menu from the gui
 set hidden " hide buffers instead of closing
 set history=50 " keep 50 lines of command line history
 set ignorecase " ignore case when searching
-set incsearch " Incremental search
+set incsearch " incremental search
 set laststatus=2 " always have status bar
-set linebreak " This displays long lines as wrapped at word boundries
+set linebreak " displays long lines as wrapped at word boundries
 set list " show whitespace chars
 set listchars=eol:¬,tab:▸\ ,trail:· " define whitespace characters
-set matchtime=10 " Time to flash the brack with showmatch
+set matchtime=10 " time to flash the brack with showmatch
 set nobackup " no backup files
 set nocompatible " use settings for vim not vi
 set nofen " disable folds
@@ -37,15 +37,14 @@ set notimeout " i like to be pokey
 set number " show line numbers
 set ruler " the ruler on the bottom is useful
 set scrolloff=1 " dont let the curser get too close to the edge
-set shiftwidth=4 " Set indention level to be the same as softtabstop
-set showcmd " Show (partial) command in status line.
+set shiftwidth=4 " set indention level to be the same as softtabstop
+set showcmd " show (partial) command in status line
 set showmatch " show matching brackets
 set smartcase " use smart case when searching
 set softtabstop=4 " set width of soft tabs
 set splitright " vertical split to the right
 set tabstop=4 " set width of tabs
-set textwidth=0 " Don't wrap words by default
-set textwidth=80 " This wraps a line with a break when you reach 80 chars
+set textwidth=0 " don't automatically add line breaks
 set ttimeout " timeout on key-codes
 set ttimeoutlen=100 " timeout on key-codes after 100ms
 set virtualedit=block " let blocks be in virutal edit mode
