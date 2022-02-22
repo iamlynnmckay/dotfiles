@@ -43,18 +43,16 @@ alias nvim='_vi'
 #
 
 _now() {
-  local -r _root="${HOME}/.config/now"
+  local -r _root="${CONFIG_ROOT:-${HOME}/.config/now}"
   if [[ ! -e "${_root}" ]]
   then
-    echo -n "Enter absolute path of projects source: " && \
-    read -r _NOW_ROOT_SRC && \
-    echo -n "Enter absolute path of notes source: " && \
+    echo -n "Enter absolute path of notes directory: " && \
     read -r _NOW_NOTES_SRC && \
-    echo -n "Enter absolute path of todo source: " && \
+    echo -n "Enter absolute path of todo file: " && \
     read -r _NOW_TODO_SRC && \
-    echo -n "Enter absolute path of wip source: " && \
+    echo -n "Enter absolute path of wip directory: " && \
     read -r _NOW_WIP_SRC && \
-    echo -n "Enter absolute path of destination: " && \
+    echo -n "Enter absolute path of now directory: " && \
     read -r _NOW_DEST && \
     if [[ -z "${EDITOR}" ]]
     then
@@ -65,7 +63,6 @@ _now() {
     fi
     mkdir -p "${_root}"
 cat >> "${_root}/now.env" << _EOF
-_NOW_ROOT_SRC='${_NOW_ROOT_SRC}'
 _NOW_NOTES_SRC='${_NOW_NOTES_SRC}'
 _NOW_TODO_SRC='${_NOW_TODO_SRC}'
 _NOW_WIP_SRC='${_NOW_WIP_SRC}'
@@ -85,8 +82,7 @@ _EOF
   mkdir -p "${_NOW_DEST}"
   local -r _link="${_NOW_DEST}"
   ln -sf "${_directory}" "${_NOW_DEST}/$(date +%Y-%m-%d)"
-  ln -sf "${_NOW_ROOT_SRC}" "${_NOW_DEST}/root"
-  ln -sf "${_NOW_TODO_SRC}" "${_NOW_DEST}/TODO.md"
+  ln -sf "${_NOW_TODO_SRC}" "${_NOW_DEST}/todo.md"
   ln -sf "${_NOW_WIP_SRC}" "${_NOW_DEST}/wip"
 }
 
