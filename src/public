@@ -45,6 +45,10 @@ alias nvim='_vi'
 _now() {
   [[ -e ~/.env ]] || \
     touch ~/.env && \
+  [[ -z ${_NOW_SRC} ]] || \
+    unset _NOW_SRC
+  [[ -z ${_NOW_DEST} ]] || \
+    unset _NOW_DEST
   source ~/.env && \
   [[ ! -z ${_NOW_SRC} ]] || \
     (
