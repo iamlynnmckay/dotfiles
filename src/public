@@ -43,47 +43,32 @@ alias nvim='_vi'
 #
 
 _now() {
-  local -r _root="${CONFIG_ROOT:-${HOME}/.config/now}"
-  if [[ ! -e "${_root}" ]]
-  then
-    echo -n "Enter absolute path of notes directory: " && \
-    read -r _NOW_NOTES_SRC && \
-    echo -n "Enter absolute path of todo file: " && \
-    read -r _NOW_TODO_SRC && \
-    echo -n "Enter absolute path of wip directory: " && \
-    read -r _NOW_WIP_SRC && \
-    echo -n "Enter absolute path of now directory: " && \
-    read -r _NOW_DEST && \
-    if [[ -z "${EDITOR}" ]]
-    then
-      echo -n "Enter editor name: " && \
-      read -r _NOW_EDITOR
-    else
-      _NOW_EDITOR="${EDITOR}"
-    fi
-    mkdir -p "${_root}"
-cat >> "${_root}/now.env" << _EOF
-_NOW_NOTES_SRC='${_NOW_NOTES_SRC}'
-_NOW_TODO_SRC='${_NOW_TODO_SRC}'
-_NOW_WIP_SRC='${_NOW_WIP_SRC}'
-_NOW_DEST='${_NOW_DEST}'
-_NOW_EDITOR='${_NOW_EDITOR}'
-_EOF
-  fi
-  source "${_root}/now.env"
-  local -r _directory="${_NOW_NOTES_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
-  mkdir -p "${_directory}"
-  local -r _file="${_directory}/$(date +%Y-%m-%d).md"
-  if [[ ! -e "${_file}" ]]
-  then 
-    echo "# $(date)" > "${_file}"
-  fi
-  rm -rf "${_NOW_DEST}"
-  mkdir -p "${_NOW_DEST}"
-  local -r _link="${_NOW_DEST}"
-  ln -sf "${_directory}" "${_NOW_DEST}/$(date +%Y-%m-%d)"
-  ln -sf "${_NOW_TODO_SRC}" "${_NOW_DEST}/todo.md"
-  ln -sf "${_NOW_WIP_SRC}" "${_NOW_DEST}/wip"
+  [[ -e ~/.env ]] || \
+    touch ~/.env && \
+  source ~/.env && \
+  [[ ! -z ${_NOW_SRC} ]] || \
+    (
+      echo -n "Enter source directory : " && \
+      read -r _NOW_SRC && \
+      echo "_NOW_SRC='${_NOW_SRC}'" >> ~/.env
+    ) && \
+  [[ ! -z ${_NOW_DEST} ]] || \
+    (
+      echo -n "Enter destination directory : " && \
+      read -r _NOW_DEST && \
+      echo "_NOW_DEST='${_NOW_DEST}'" >> ~/.env
+    ) && \
+  source ~/.env && \
+  local -r _src="${_NOW_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
+  local -r _dest="${_NOW_DEST}/$(date +%Y-%m-%d)"
+  local -r _file="${_src}/$(date +%Y-%m-%d).md"
+  [[ -e "${_src}" ]] || \
+    mkdir -p "${_src}" && \
+  [[ -e "${_file}" ]] || \
+    echo "# $(date)" > "${_file}" && \
+  [[ ! -e "${_dest}" ]] || \
+    rm -rf "${_dest}" && \
+  ln -sf "${_src}" "${_dest}"
 }
 
 alias now='_now'

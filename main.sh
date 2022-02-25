@@ -57,7 +57,7 @@ _Dotfiles_install() {
 }
 
 _Dotfiles_clean() {
-	local -r _dest="${PWD}/.dotfiles"
+	local -r _dest="${HOME}/.dotfiles"
 	_Dotfiles___unlink
 	_Dotfiles___remove "${_dest}"
 }
