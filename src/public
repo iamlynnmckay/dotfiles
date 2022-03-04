@@ -82,6 +82,20 @@ alias now='_now'
 #
 
 #
+# BEGIN timestamp
+#
+
+_timestamp() {
+  date --iso-8601='seconds'
+}
+
+alias timestamp='_timestamp'
+
+#
+# END timestamp
+#
+
+#
 # BEGIN homebrew
 #
 
