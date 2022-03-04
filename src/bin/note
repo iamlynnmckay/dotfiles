@@ -1,0 +1,36 @@
+#!/bin/zsh
+
+_note() {
+  [[ -e ~/.env ]] || \
+    touch ~/.env && \
+  [[ -z ${_NOTE_SRC} ]] || \
+    unset _NOTE_SRC
+  [[ -z ${_NOTE_DEST} ]] || \
+    unset _NOTE_DEST
+  source ~/.env && \
+  [[ ! -z ${_NOTE_SRC} ]] || \
+    (
+      echo -n "Enter source directory : " && \
+      read -r _NOTE_SRC && \
+      echo "_NOTE_SRC='${_NOTE_SRC}'" >> ~/.env
+    ) && \
+  [[ ! -z ${_NOTE_DEST} ]] || \
+    (
+      echo -n "Enter destination directory : " && \
+      read -r _NOTE_DEST && \
+      echo "_NOTE_DEST='${_NOTE_DEST}'" >> ~/.env
+    ) && \
+  source ~/.env && \
+  local -r _src="${_NOTE_SRC}/$(date +%Y)/$(date +%m)/$(date +%d)"
+  local -r _dest="${_NOTE_DEST}/$(date +%Y-%m-%d)"
+  local -r _file="${_src}/$(date +%Y-%m-%d).md"
+  [[ -e "${_src}" ]] || \
+    mkdir -p "${_src}" && \
+  [[ -e "${_file}" ]] || \
+    echo "# $(date)" > "${_file}" && \
+  [[ ! -e "${_dest}" ]] || \
+    rm -rf "${_dest}" && \
+  ln -sf "${_src}" "${_dest}"
+}
+
+(_note)

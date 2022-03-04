@@ -17,6 +17,8 @@ _Dotfiles___remove() {
 _Dotfiles___link() {
     local -r _root="${1:?}"
 	mkdir -p "${HOME}/.config/nvim"
+	ln -sf "${_root}/bin" "${HOME}/.bin"
+	ln -sf "${_root}/alias" "${HOME}/.alias"
 	ln -sf "${_root}/public" "${HOME}/.public"
 	ln -sf "${_root}/gitignore" "${HOME}/.gitignore"
 	ln -sf "${_root}/ohmyzshrc" "${HOME}/.ohmyzshrc"
@@ -32,6 +34,8 @@ _Dotfiles___link() {
 _Dotfiles___unlink() {
     local -r _tempDir="${HOME}/.backup/dotfiles/$(date +%s)${RANDOM}"
     mkdir -p "${_tempDir}"
+	mv "${HOME}/.bin" "${_tempDir}" || :
+	mv "${HOME}/.alias" "${_tempDir}" || :
 	mv "${HOME}/.bashrc" "${_tempDir}" || :
 	mv "${HOME}/.config/nvim/init.vim" "${_tempDir}" || :
 	mv "${HOME}/.gitignore" "${_tempDir}" || :

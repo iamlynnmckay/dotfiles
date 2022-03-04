@@ -1,0 +1,5 @@
+#!/bin/zsh
+
+alias vi='_vi'
+alias vim='_vi'
+alias nvim='_vi'

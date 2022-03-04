@@ -1,0 +1,25 @@
+#!/bin/zsh
+
+_vi() {
+  unalias vi &> /dev/null ; \
+  unalias vim &> /dev/null ; \
+  unalias nvim &> /dev/null ; \
+  local _VI_EDITOR
+  if which nvim &> /dev/null
+  then 
+    _VI_EDITOR=$(which nvim)
+  elif which vim &> /dev/null
+  then
+    _VI_EDITOR=$(which vim)
+  elif which vi &> /dev/null
+  then
+    _VI_EDITOR=$(which vi)
+  fi
+  export EDITOR="${_VI_EDITOR}"
+  alias vi="_vi"
+  alias vim="_vi"
+  alias nvim="_vi"
+  ${_VI_EDITOR} ${@:-}
+}
+
+(_vi ${@:-})
